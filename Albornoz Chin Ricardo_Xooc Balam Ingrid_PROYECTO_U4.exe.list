@@ -1,0 +1,561 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Albornoz Chin Ricardo_Xooc Balam Ingrid_PROYECTO_U4.exe -- emu8086 assembler version: 4.08  
+ 
+[ 28/05/2020  --  12:33:42 a. m. ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       ;Carrera:   Ing. En Sistemas Computacionales
+[   2]        :                                       ;Grado:     6
+[   3]        :                                       ;Grupo:     "A"
+[   4]        :                                       ;Materia:   Lenguaje y Autómatas
+[   5]        :                                       ;Profesor:  Lic. José Leonel Pech May
+[   6]        :                                       ;Integrantes:
+[   7]        :                                       ;           Albornoz Chin Ricardo Ismael (17070007)
+[   8]        :                                       ;           Xooc Balam Ingrid Lisset     (17070047)
+[   9]        :                                       ;
+[  10]        :                                       ;Fecha:     1/Junio/2020
+[  11]        :                                       ;Descripción del programa:
+[  12]        :                                       ;          Realiza un programa que permita ejemplificar la generación de código objeto a través de código ensamblador o simil.
+[  13]        :                                       ;          1.	Suma de dos números.
+[  14]        :                                       ;          2.	Resta de dos números.
+[  15]        :                                       ;          3.	División de dos números.
+[  16]        :                                       ;          4.	Multiplicación de dos números.
+[  17]        :                                       
+[  18]        :                                       
+[  19]        :                                       .model small     ;Se define el modelo de tipo small
+[  20]        :                                       .stack 100       ;Se determina el tamaño de la pila, en este caso es de 100
+[  21]        :                                       .data            ;En este apartado se declaran todas las variables que se utilizarán en el programa.
+[  22]        :                                       
+[  23]    0070: 0A 0D 20 20 20 31 2E 20 53 75 6D 61   Opcion1       db 10,13, '   1. Suma de dos números $'            ;Esta variable es una de las opciones del submenú.
+                20 64 65 20 64 6F 73 20 6E FA 6D 65 
+                72 6F 73 20 24                      
+[  24]    008D: 0A 0D 20 20 20 32 2E 20 52 65 73 74   Opcion2       db 10,13, '   2. Resta de dos números $'           ;Esta variable es una de las opciones del menú.
+                61 20 64 65 20 64 6F 73 20 6E FA 6D 
+                65 72 6F 73 20 24                   
+[  25]    00AB: 0A 0D 20 20 20 33 2E 20 4D 75 6C 74   Opcion3       db 10,13, '   3. Multiplicación de dos números $'  ;Esta variable es una de las opciones del submenú.
+                69 70 6C 69 63 61 63 69 F3 6E 20 64 
+                65 20 64 6F 73 20 6E FA 6D 65 72 6F 
+                73 20 24                            
+[  26]    00D2: 0A 0D 20 20 20 34 2E 20 44 69 76 69   Opcion4       db 10,13, '   4. División de dos números $'        ;Esta variable es una de las opciones del submenú.
+                73 69 F3 6E 20 64 65 20 64 6F 73 20 
+                6E FA 6D 65 72 6F 73 20 24          
+[  27]    00F3: 0A 0D 20 20 20 35 2E 20 53 61 6C 69   Opcion5       db 10,13, '   5. Salir $'                          ;Esta variable es una de las opciones del submenú.
+                72 20 24                            
+[  28]    0102: 0A 0D 49 6E 67 72 65 73 61 20 65 6C   dividendo     db 10,13, 'Ingresa el dividendo: $'                ;Varaiable que almacena el dividendo que ingresa el usuario.
+                20 64 69 76 69 64 65 6E 64 6F 3A 20 
+                24                                  
+[  29]    011B: 0A 0D 49 6E 67 72 65 73 61 20 65 6C   divisor       db 10,13, 'Ingresa el divisor: $'                  ;Varaiable que almacena el divisor que ingresa el usuario.
+                20 64 69 76 69 73 6F 72 3A 20 24    
+[  30]    0132: 0A 0D 45 6C 20 52 65 73 69 64 75 6F   residuo       db 10,13, 'El Residuo es: $'                       ;Varaiable que imprime el residuo de la división que se realiza.
+                20 65 73 3A 20 24                   
+[  31]    0144: 0A 0D 45 6C 20 72 65 73 75 6C 74 61   Resultado     db 10,13, 'El resultado es: $'                     ;Variable que se utiliza para identificar el resultado de la operación.
+                64 6F 20 65 73 3A 20 24             
+[  32]    0158: 0A 0D 49 6E 67 72 65 73 61 20 6C 61   primerMsg     db 10,13, 'Ingresa la opción:  $'                  ;La variable primerMsg se muestra para ingresar la opción que se desee.
+                20 6F 70 63 69 F3 6E 3A 20 20 24    
+[  33]    016F: 0A 0D 49 6E 67 72 65 73 61 20 75 6E   Numero        db 10,13, 'Ingresa un número: $'                     ;Mensaje que se muestra para ingresar un número
+                20 6E FA 6D 65 72 6F 3A 20 24       
+[  34]    0185: 0A 0D 20 24                           nlinea        db 10,13, ' $'                                     ;Sirve para hacer un salto de línea.
+[  35]    0189: 00                                    resii         db 0     ;La variable resii almacena el residuo de la división.
+[  36]    018A: 00                                    resul         db 0     ;La variable resul almacena el resultado de la operación que se realiza.
+[  37]    018B: 00                                    num1Uni       db 0     ;La variable num1Uni almacena las unidades del primer número que se ingresa, para realizar la multiplicación.
+[  38]    018C: 00                                    num1Dec       db 0     ;La variable num1Dec almacena las decenas del primer número que se ingresa, para realizar la multiplicación.
+[  39]    018D: 00                                    num2Uni       db 0     ;La variable num2Uni almacena las unidades del segundo número que se ingresa, para realizar la multiplicación.
+[  40]    018E: 00                                    num2Dec       db 0     ;La variable num2Dec almacena las decenas del segundo número que se ingresa, para realizar la multiplicación.
+[  41]    018F: 00                                    numero1       db 0     ;La variable numero1 almacena el primer número para realiza las operaciones.
+[  42]    0190: 00                                    numero2       db 0     ;La variable numero2 almacena el segundo número para realiza las operaciones.
+[  43]    0191: 00                                    uni           db 0     ;La variable uni almacena el valor de las unidades del resultado de la multiplicación.
+[  44]    0192: 00                                    cente         db 0     ;La variable cente almacena el valor de las decenas del resultado de la multiplicación.
+[  45]    0193: 00                                    dece          db 0     ;La variable dece almacena el valor de las centenas del resultado de la multiplicación.
+[  46]    0194: 00                                    millar        db 0     ;La variable millar almacena el valor del millar del resultado de la multiplicación.
+[  47]    0195: 00                                    acarreo1      db 0     ;La variable acarreo1 almacena el valor del acarreo de la multiplicación.
+[  48]    0196: 00                                    acarreo2      db 0     ;La variable acarreo2 almacena el valor del acarreo de la multiplicación.
+[  49]    0197: 2D 24                                 negativo db "-$"       ;Sirve para mostrar un signo, este se usa en la resta en el caso de que sea negativo
+[  50]        :                                       
+[  51]        :                                       
+[  52]        :                                       .code ;Comienza la parte del código.
+[  53]        :                                       ; MACROS
+[  54]        :                                       Macro1_OperacionPrincipal MACRO al  ;Macro que recibe el parámetro AL y ayuda a saber que operación se llevará a cabo.
+[  55]        :                                       cmp al,1          ;Compara el valor de la variable AL con el número 1.
+[  56]        :                                       je Suma           ;Si la variable AL es igual a 1, entonces va a la etiqueta Suma.
+[  57]        :                                       
+[  58]        :                                       cmp al,2          ;Compara el valor de la variable AL con el número 2.
+[  59]        :                                       je Resta          ;Si la variable AL es igual a 2, entonces va a la etiqueta Resta.
+[  60]        :                                       
+[  61]        :                                       cmp al,3          ;Compara el valor de la variable AL con el número 3.
+[  62]        :                                       je Multiplicacion ;Si la variable AL es igual a 3, entonces va a la etiqueta Multiplicacion.
+[  63]        :                                       
+[  64]        :                                       cmp al,4          ;Compara el valor de la variable AL con el número 4.
+[  65]        :                                       je Division       ;Si la variable AL es igual a 4, entonces va a la etiqueta Division.
+[  66]        :                                       
+[  67]        :                                       cmp al,5          ;Compara el valor de la variable AL con el número 5.
+[  68]        :                                       je salir          ;Si la variable AL es igual a 5, entonces va a la etiqueta salir.
+[  69]        :                                       ENDM ;Fin de la macro Macro1_OperacionPrincipal
+[  70]        :                                       
+[  71]        :                                       
+[  72]        :                                       Macro3_Suma MACRO numero1,numero2   ;Macro que realiza una suma de dos dígitos
+[  73]        :                                       mov al, numero1                ;Se mueve a AL lo que se almacena en numero1.
+[  74]        :                                       add al, numero2                ;Se le suma a AL el valor de la variable numero2.
+[  75]        :                                       mov resul,al                   ;Se mueve el resultado de la suma a la variable resul.
+[  76]        :                                       Macro5_Resultado resul         ;Se llama a la macro Macro5_Resultado, enviandole la variable resul.
+[  77]        :                                       ENDM                                ;Fin macro
+[  78]        :                                       
+[  79]        :                                       Macro4_Resta MACRO numero1,numero2  ;Macro que realiza una resta de dos dígitos
+[  80]        :                                       mov SI, 0                      ;Limpia el segmento de datos, esto pasandole el cero al registro si
+[  81]        :                                       mov al, numero1                ;Movemos el valor que ingresó el usuario en numero1 al registro AL
+[  82]        :                                       cmp al, numero2                ;Movemos el valor que ingresó el usuario en numero2 al registro AL
+[  83]        :                                       jnle CONTINUA                  ;Salta al bloque continua
+[  84]        :                                       mov ah, numero2                ;Mueve el valor que tiene almacenado el numero2 al registro ah
+[  85]        :                                       mov numero1, ah                ;Movemos el valor que tiene ah en la variable numero1
+[  86]        :                                       mov numero2, al                ;Movemos el valor que tiene al en la variable numero2
+[  87]        :                                       mov SI,1                       ;Guarda el valor en el registro de semento de datos
+[  88]        :                                       
+[  89]        :                                       CONTINUA:
+[  90]        :                                       
+[  91]        :                                       mov al, numero1             ;mueve el valor que tiene almacenada la variable al en el registro al
+[  92]        :                                       sub al, numero2             ;sub resta el valor del numero2 al registro al que es donde se guardo el numero1
+[  93]        :                                       
+[  94]        :                                       CALL ResultadoResta
+[  95]        :                                       
+[  96]        :                                       ;Macro5_Resultado resul        ;Se llama a la macro Macro5_Resultado, enviandole la variable resul.
+[  97]        :                                       ENDM                                ;Fin macro
+[  98]        :                                       
+[  99]        :                                       
+[ 100]        :                                       Macro5_Multiplicacion MACRO num1Dec,num1Uni,num2Dec,num2Uni  ;Macro que realiza una multiplicación de dos dígitos
+[ 101]        :                                       
+[ 102]        :                                       ;Primera multiplicacion uni = num2Uni*num1Uni, acarreo1=ah
+[ 103]        :                                       mov al,num2Uni    ;Se mueve en AL, el valor de la unidad del segundo número
+[ 104]        :                                       mov bl,num1Uni    ;Se mueve en BL, el valor de la unidad del primer número
+[ 105]        :                                       mul bl            ;Se realiza la multiplicación de AL * BL y el resultado se guarda en AL
+[ 106]        :                                       mov ah,00h        ;Se limpia AH, para separar al en Unidades y Decenas
+[ 107]        :                                       AAM               ;Se descompone el número y se guarda en AX
+[ 108]        :                                       mov uni,al        ;Se asigna a la variable uni,el valor que está en AL
+[ 109]        :                                       mov acarreo1,ah   ;Se asigna a la variable acarreo1,el valor que está en AH
+[ 110]        :                                       
+[ 111]        :                                       
+[ 112]        :                                       ;Segunda multiplicacion dece = num2Uni*num2Dec+acarreo1, acarreo1=ah
+[ 113]        :                                       mov al,num2Uni    ;Se mueve en AL, el valor de la unidad del segundo número
+[ 114]        :                                       mov bl,num1Dec    ;Se mueve en BL, el valor de la decena del primer número
+[ 115]        :                                       mul bl            ;Se realiza la multiplicación de AL * BL y el resultado se guarda en AL
+[ 116]        :                                       add al,acarreo1   ;Se le suma a AL,el valor de la variable acarreo1
+[ 117]        :                                       mov ah,00h        ;Se limpia AH, para separar lo que hay en AL en Unidades y Decenas
+[ 118]        :                                       AAM               ;Se descompone el número y se guarda en AX
+[ 119]        :                                       mov dece,al       ;Se asigna a la variable dece,el valor que está en AL
+[ 120]        :                                       mov acarreo1,ah   ;Se asigna a la variable acarreo1,el valor que está en AH
+[ 121]        :                                       mov cente,ah      ;Se agrega a cente, el valor de acarreo2
+[ 122]        :                                       
+[ 123]        :                                       ;Tercera multiplicacion cente = num2Dec*num1Uni+, acarreo=ah
+[ 124]        :                                       mov al,num2Dec    ;Se mueve en AL, el valor de la unidad del segundo número
+[ 125]        :                                       mov bl,num1Uni    ;Se mueve en BL, el valor de la decena del primer número
+[ 126]        :                                       mul bl            ;Se realiza la multiplicación de AL * BL y el resultado se guarda en AL
+[ 127]        :                                       mov ah,00h        ;Se limpia AH, para separar lo que hay en AL en Unidades y Decenas
+[ 128]        :                                       AAM               ;Se descompone el número y se guarda en AX
+[ 129]        :                                       add dece,al       ;Se asigna a la variable dece,el valor que está en AL
+[ 130]        :                                       add acarreo2,ah   ;Se asigna a la variable acarreo2, el valor de AH
+[ 131]        :                                       mov al,dece       ;Se mueve a AL, el valor de la variable dece
+[ 132]        :                                       mov ah,00h        ;Se limpia AH, para separar lo que hay en AL en Unidades y Decenas
+[ 133]        :                                       AAM               ;Se descompone el número y se guarda en AX
+[ 134]        :                                       mov dece,al
+[ 135]        :                                       add cente,ah      ;Se le suma a cente, el valor de AH
+[ 136]        :                                       
+[ 137]        :                                       ;Cuarta multiplicacion millar = num2Dec*num1Dec, acarreo=ah
+[ 138]        :                                       mov al,num2Dec    ;Se mueve en AL, el valor de la decena del segundo número
+[ 139]        :                                       mov bl,num1Dec    ;Se mueve en BL, el valor de la decena del segundo número
+[ 140]        :                                       mul bl            ;Se realiza la multiplicación de AL * BL y el resultado se guarda en AL
+[ 141]        :                                       add al,acarreo2   ;Se le suma a AL, el valor de la variable acarreo2
+[ 142]        :                                       mov ah,00h        ;Se limpia AH, para separar lo que hay en AL en Unidades y Decenas
+[ 143]        :                                       
+[ 144]        :                                       AAM               ;Se descompone el número y se guarda en AX
+[ 145]        :                                       add cente,al      ;Se suma a cente, el valor de AL
+[ 146]        :                                       mov millar,ah     ;Se mueve a la variable millar el valor de AH
+[ 147]        :                                       mov al,cente      ;Se mueve a AL, el valor de la variable cente
+[ 148]        :                                       mov ah, 00h       ;Se limpia AH, para separar lo que hay en AL en Unidades y Decenas
+[ 149]        :                                       AAM               ;Se descompone el número y se guarda en AX
+[ 150]        :                                       mov cente,al      ;Se mueve a cente el valor de AL
+[ 151]        :                                       add millar,ah     ;Se mueve a millar el valor de AH
+[ 152]        :                                       mov acarreo1,0h   ;Se limpia acarreo1
+[ 153]        :                                       mov acarreo2,0h   ;Se limpia acarreo2
+[ 154]        :                                       
+[ 155]        :                                       ;Imprimir el resultado
+[ 156]        :                                       mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 157]        :                                       lea dx,Resultado   ;Lea carga el mensaje de la variable Resultado en el segmento de datos y
+[ 158]        :                                       int 21h            ;la interrupción 21h muestra el mensaje.
+[ 159]        :                                       ;Imprimir el millar
+[ 160]        :                                       mov ah,02h         ;02h indica la operacion que coloca al cursor
+[ 161]        :                                       mov dl,millar      ;Se mueve en dl lo que está guardado en millar y
+[ 162]        :                                       add dl,30h         ;se le suma 30h para tener el número.
+[ 163]        :                                       int 21h            ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla.
+[ 164]        :                                       ;Imprimir la centena
+[ 165]        :                                       mov ah,02H         ;02h indica la operacion que coloca al cursor
+[ 166]        :                                       mov dl,cente       ;Se mueve en dl lo que está guardado en cente y
+[ 167]        :                                       add dl,30h         ;se le suma 30h para tener el número.
+[ 168]        :                                       int 21h            ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla.
+[ 169]        :                                       ;Imprimir la decena
+[ 170]        :                                       mov ah,02H         ;02h indica la operacion que coloca al cursor
+[ 171]        :                                       mov dl,dece        ;Se mueve en dl lo que está guardado en dece y
+[ 172]        :                                       add dl,30h         ;se le suma 30h para tener el número.
+[ 173]        :                                       int 21h            ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla.
+[ 174]        :                                       ;Imprimir la unidad
+[ 175]        :                                       mov ah,02H         ;02h indica la operacion que coloca al cursor
+[ 176]        :                                       mov dl,uni         ;Se mueve en dl lo que está guardado en uni y
+[ 177]        :                                       add dl,30h         ;se le suma 30h para tener el número.
+[ 178]        :                                       int 21h            ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla.
+[ 179]        :                                       jmp Main ;Salta a la etiqueta MAIN.
+[ 180]        :                                       
+[ 181]        :                                       ENDM  ;Fin de la macro Macro5_Multiplicacion
+[ 182]        :                                       
+[ 183]        :                                       Macro6_Division MACRO numero1,numero2  ;Macro que realiza una división de dos dígitos
+[ 184]        :                                       xor ax,ax                      ;Se limpia el registro ax.
+[ 185]        :                                       mov bl, numero1                ;Se mueve a BL lo que se almacena en numero1.
+[ 186]        :                                       mov al, numero2                ;Se mueve a AL lo que se almacena en numero2.
+[ 187]        :                                       div bl                         ;Se realiza la división y el resultado se guarda en AL.
+[ 188]        :                                       mov resul,al                   ;Se mueve el resultado de la división a la variable resul.
+[ 189]        :                                       mov resii, ah                  ;Se mueve el residuo de la división a la variable resii.
+[ 190]        :                                       mov ah, 09h                    ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 191]        :                                       lea dx,residuo                 ;Lea carga el mensaje de la variable residuo en el segmento de datos y
+[ 192]        :                                       int 21h                        ;la interrupción 21h muestra el mensaje.
+[ 193]        :                                       mov al,resii                   ;Se mueve a AL,el valor de la variable resii
+[ 194]        :                                       aam                            ;Propiedad que ayuda a descomponer un número de varios digitos.
+[ 195]        :                                       mov bx,ax                      ;Se mueve a BX lo que tiene AX
+[ 196]        :                                       ;para imprimir el valor de la decena
+[ 197]        :                                       mov ah,02h                     ;02h indica la operacion que coloca al cursor
+[ 198]        :                                       mov dl,bh                      ;Se mueve en dl lo que está guardado en bh y
+[ 199]        :                                       add dl,30h                     ;se le suma 30h para tener el número.
+[ 200]        :                                       int 21h                        ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla
+[ 201]        :                                       ;para imprimir el valor de la unidad
+[ 202]        :                                       mov ah,02h                     ;02h indica la operacion que coloca al cursor
+[ 203]        :                                       mov dl,bl                      ;Se mueve en dl lo que está guardado en bl y
+[ 204]        :                                       add dl,30h                     ;se le suma 30h para tener el digito.
+[ 205]        :                                       int 21h                        ;la interrupción 21h muestra el mensaje.
+[ 206]        :                                       Macro5_Resultado resul         ;Se llama a la macro Macro5_Resultado, enviandole la variable resul.
+[ 207]        :                                       ENDM  ;Fin de la macro Macro6_Division
+[ 208]        :                                       
+[ 209]        :                                       
+[ 210]        :                                       Macro5_Resultado MACRO resul        ;Macro que se encarga de imprimir el resultado de la operación hecha anteriormente.
+[ 211]        :                                       mov ah, 09h                     ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 212]        :                                       lea dx,Resultado                ;Lea carga el mensaje de la variable Resultado en el segmento de datos y
+[ 213]        :                                       int 21h                         ;la interrupción 21h muestra el mensaje.
+[ 214]        :                                       mov ah,0                        ;Se inicia con el valor 0 al registro AH
+[ 215]        :                                       mov al,resul                    ;Se mueve lo que tiene la variable resul al registro AL.
+[ 216]        :                                       AAM                             ;Propiedad que ayuda a descomponer un número de varios digitos.
+[ 217]        :                                       mov uni, al                     ;Se asigna a la variable uni lo que tiene AL.
+[ 218]        :                                       mov al, ah                      ;se mueve a Al lo que tiene Ah.
+[ 219]        :                                       AAM                             ;Se descompone el número y se guarda
+[ 220]        :                                       mov dece,al                     ;en la variable dece lo que tiene actualmente AL y
+[ 221]        :                                       mov cente, ah                   ;en la variable cente se guarda lo que tiene Ah.
+[ 222]        :                                       
+[ 223]        :                                       ;para imprimir el valor de la centena
+[ 224]        :                                       mov ah,02h                      ;02h indica la operacion que coloca al cursor
+[ 225]        :                                       mov dl,cente                    ;Se mueve en dl lo que está guardado en cente y
+[ 226]        :                                       add dl,30h                      ;se le suma 30h para tener el número.
+[ 227]        :                                       int 21h                         ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla.
+[ 228]        :                                       ;para imprimir el valor de la decena
+[ 229]        :                                       mov ah,02h                      ;02h indica la operacion que coloca al cursor
+[ 230]        :                                       mov dl,dece                     ;Se mueve en dl lo que está guardado en dece y
+[ 231]        :                                       add dl,30h                      ;se le suma 30h para tener el número.
+[ 232]        :                                       int 21h                         ;Por último se realiza la interrupción 21h, encargado de mostrar el resultado en la pantalla.
+[ 233]        :                                       ;para imprimir el valor de la unidad
+[ 234]        :                                       mov ah,02h                      ;02h indica la operacion que coloca al cursor
+[ 235]        :                                       mov dl,uni                      ;Se mueve en dl lo que está guardado en uni y
+[ 236]        :                                       add dl,30h                      ;se le suma 30h para tener el digito.
+[ 237]        :                                       int 21h                         ;la interrupción 21h muestra el mensaje.
+[ 238]        :                                       jmp Main ;se llama a la etiqueta Main
+[ 239]        :                                       ENDM ;Fin de la macro Macro5_Resultado
+[ 240]        :                                       
+[ 241]    01A0: B8 07 00                              mov ax,@data                     ;Para poder utilizar las variables que se han declarado, se le asignan al registro ax
+[ 242]    01A3: 8E D8                                 mov ds, ax                       ;Se le asigna al segmento de datos (ds) todo lo que se cargo anteriormente en ax.
+[ 243]        :                                       
+[ 244]    01A5:                                       Main:                            ;Etiqueta Main
+[ 245]    01A5: E8 25 00                              call Procedimiento1_Menu     ;Llama al procedimiento Procedimiento1_Menu, para mostrar el menú principal.
+[ 246]    01A8: E8 48 00                              call ObtenerOpcion           ;Llama al procedimiento ObtenerOpcion para tener la opción que se seleccionó.
+[ 247]    01AB: 3C 01 74 75 3C 02 75 03 E9 C4 00 3C   Macro1_OperacionPrincipal al ;Se llama a la macro Macro1_OperacionPrincipal y se le manda la variable AL, que es el que almacena la opción que se seleccionó.
+                03 75 03 E9 ED 00 3C 04 75 03 E9 D2 
+                01 3C 05 75 03 E9 DE 02             
+[ 248]    01CB: E2 D8                                 loop Main ;Se repite el bucle loop y va a la etiqueta Main.
+[ 249]        :                                       
+[ 250]        :                                       ;PROCEDIMIENTOS
+[ 251]        :                                       
+[ 252]    01CD:                                       Procedimiento1_Menu PROC NEAR  ;Procedimiento encargado de imprimir el menú principal.
+[ 253]    01CD: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 254]    01CF: BA 15 01                              lea dx,nlinea      ;Lea carga el mensaje de la variable nlinea en el segmento de datos y
+[ 255]    01D2: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 256]    01D4: BA 15 01                              lea dx,nlinea      ;Lea carga el mensaje de la variable nlinea en el segmento de datos y
+[ 257]    01D7: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 258]    01D9: BA 00 00                              lea dx,Opcion1     ;Lea carga el mensaje de la variable Opcion1 en el segmento de datos y
+[ 259]    01DC: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 260]    01DE: BA 1D 00                              lea dx,Opcion2     ;Lea carga el mensaje de la variable Opcion2 en el segmento de datos y
+[ 261]    01E1: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 262]    01E3: BA 3B 00                              lea dx,Opcion3     ;Lea carga el mensaje de la variable Opcion3 en el segmento de datos y
+[ 263]    01E6: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 264]    01E8: BA 62 00                              lea dx,Opcion4     ;Lea carga el mensaje de la variable Opcion4 en el segmento de datos y
+[ 265]    01EB: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 266]    01ED: BA 83 00                              lea dx,Opcion5     ;Lea carga el mensaje de la variable Opcion5 en el segmento de datos y
+[ 267]    01F0: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 268]        :                                       
+[ 269]    01F2: C3                                    RET ;Retorno del programa.
+[ 270]        :                                       Procedimiento1_Menu ENDP ;Fin de procedimiento Procedimiento1_Menu
+[ 271]        :                                       
+[ 272]        :                                       
+[ 273]    01F3:                                       ObtenerOpcion PROC NEAR ;Procedimiento encargado de obtener la opción de la tarea que el usuario desea desarrollar.
+[ 274]    01F3: BA E8 00                              lea dx,primerMsg   ;Lea carga el mensaje de la variable primerMsg en el segmento de datos y
+[ 275]    01F6: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 276]    01F8: B4 01                                 mov ah,01h         ;01h se encarga de realizar una petición junto con la
+[ 277]    01FA: CD 21                                 int 21h            ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 278]    01FC: 2C 30                                 sub al,30h         ;Se le resta 30h al registro AL para tener el dato en decimal
+[ 279]    01FE: C3                                    RET                ;Retorno del programa.
+[ 280]        :                                       ObtenerOpcion ENDP     ;Fin de procedimiento ObtenerOpcion.
+[ 281]        :                                       
+[ 282]    01FF:                                       DatoDecimal PROC NEAR
+[ 283]    01FF: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 284]    0201: BA FF 00                              lea dx, Numero     ;Lea carga el mensaje de la variable Numero en el segmento de datos y
+[ 285]    0204: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 286]        :                                       
+[ 287]    0206: B4 01                                 mov ah,01h         ;01h se encarga de realizar una petición junto con la
+[ 288]    0208: CD 21                                 int 21h            ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 289]    020A: 2C 30                                 sub al,30h         ;Como el caracter se guarda en al, entonces a al se le resta 30h para conocer en
+[ 290]        :                                       ;el valor de ese dato en el código ascii
+[ 291]    020C: A2 23 01                              mov dece,al        ;cuando se termina de realizar la resta, se asigna a la variable dece
+[ 292]        :                                       ;que es el encargado de alamacenar las decenas del número con el que se trabajará.
+[ 293]        :                                       
+[ 294]    020F: B4 01                                 mov ah, 01h        ;Se realiza de nuevo una petición, pero esta vez para obtener las unidades del número
+[ 295]    0211: CD 21                                 int 21h            ;se muestra la consola para ingresar el caracter. Este caracter se guarda el al.
+[ 296]    0213: 2C 30                                 sub al,30h         ;Se le resta 30h a al para conocer cuál es el número ingresado, posteriormente
+[ 297]    0215: A2 21 01                              mov uni,al         ;este resultado se le es asignado a la variable uni.
+[ 298]        :                                       
+[ 299]        :                                       ;Procedimiento para guardar el número ingresado a la variable dato
+[ 300]        :                                       ;Como el número ingresado esta separado en decenas y unidades entonces se realiza lo siguiente.
+[ 301]    0218: A0 23 01                              mov al,dece        ;Se mueve al acumulador al el valor de la variable dece.
+[ 302]    021B: B3 0A                                 mov bl,10          ;Se asigna el valor de 10 en el registro base, ya que una decena equiva a 10
+[ 303]    021D: F6 E3                                 mul bl             ;Se multiplica al por bl para tener el resultado. El resultado se guarda en al
+[ 304]    021F: 02 06 21 01                           add al,uni         ;Como ya se tiene las decenas ahora solo se le suma las unidades al registro al.
+[ 305]    0223: C3                                    RET ;RETORNO DEL PROGRAMA
+[ 306]        :                                       DatoDecimal ENDP
+[ 307]        :                                       
+[ 308]    0224:                                       Suma:
+[ 309]    0224: E8 D8 FF                              call DatoDecimal   ;Se llama al procedimeinto DatoDecimal, para tener el dato en decimal
+[ 310]    0227: A2 1F 01                              mov numero1,al     ;Se mueve lo que tiene AL a la variable numero1.
+[ 311]    022A: E8 D2 FF                              call DatoDecimal   ;Se llama al procedimeinto DatoDecimal, para tener el dato en decimal
+[ 312]    022D: A2 20 01                              mov numero2,al     ;Se mueve lo que tiene AL a la variable numero2.
+[ 313]    0230: A0 1F 01 02 06 20 01 A2 1A 01 B4 09   Macro3_Suma numero1,numero2  ;Se llama a la macro Macro3_Suma y se le envía dos parámetros.
+                BA D4 00 CD 21 B4 00 A0 1A 01 D4 0A 
+                A2 21 01 8A C4 D4 0A A2 23 01 88 26 
+                22 01 B4 02 8A 16 22 01 80 C2 30 CD 
+                21 B4 02 8A 16 23 01 80 C2 30 CD 21 
+                B4 02 8A 16 21 01 80 C2 30 CD 21 E9 
+                2B FF                               
+[ 314]        :                                       
+[ 315]    027A:                                       Resta:
+[ 316]    027A: E8 82 FF                              call DatoDecimal   ;Se llama al procedimeinto DatoDecimal, para tener el dato en decimal
+[ 317]    027D: A2 1F 01                              mov numero1,al     ;Se mueve lo que tiene AL a la variable numero1.
+[ 318]    0280: E8 7C FF                              call DatoDecimal   ;Se llama al procedimeinto DatoDecimal, para tener el dato en decimal
+[ 319]    0283: A2 20 01                              mov numero2,al     ;Se mueve lo que tiene AL a la variable numero2.
+[ 320]    0286: BE 00 00 A0 1F 01 3A 06 20 01 7F 0E   Macro4_Resta numero1,numero2  ;Se llama a la macro Macro4_Resta y se le envía dos parámetros.
+                8A 26 20 01 88 26 1F 01 A2 20 01 BE 
+                01 00 A0 1F 01 2A 06 20 01 E8 BC 01 
+                                                    
+[ 321]        :                                       
+[ 322]    02AA:                                       Multiplicacion:
+[ 323]    02AA: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 324]    02AC: BA FF 00                              lea dx, Numero     ;Lea carga el mensaje de la variable Numero en el segmento de datos y
+[ 325]    02AF: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 326]    02B1: B4 01                                 mov ah,01h         ;01h se encarga de realizar una petición junto con la
+[ 327]    02B3: CD 21                                 int 21h            ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 328]    02B5: 2C 30                                 sub al,30h         ;Como el caracter se guarda en al, entonces a al se le resta 30h para conocer en
+[ 329]        :                                       ;el valor de ese dato en el código ascii
+[ 330]    02B7: A2 1C 01                              mov num1Dec,al     ;cuando se termina de realizar la resta, se asigna a la variable num1Dec
+[ 331]        :                                       ;que es el encargado de alamacenar las decenas del número con el que se trabajará.
+[ 332]    02BA: B4 01                                 mov ah, 01h        ;Se realiza de nuevo una petición, pero esta vez para obtener las unidades del número
+[ 333]    02BC: CD 21                                 int 21h            ;se muestra la consola para ingresar el caracter. Este caracter se guarda el al.
+[ 334]    02BE: 2C 30                                 sub al,30h         ;Se le resta 30h a al para conocer cuál es el número ingresado, posteriormente
+[ 335]    02C0: A2 1B 01                              mov num1Uni,al     ;este resultado se le es asignado a la variable num1Uni.
+[ 336]        :                                       
+[ 337]    02C3: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 338]    02C5: BA FF 00                              lea dx, Numero     ;Lea carga el mensaje de la variable Numero en el segmento de datos y
+[ 339]    02C8: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 340]    02CA: B4 01                                 mov ah,01h         ;01h se encarga de realizar una petición junto con la
+[ 341]    02CC: CD 21                                 int 21h            ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 342]    02CE: 2C 30                                 sub al,30h         ;Como el caracter se guarda en al, entonces a al se le resta 30h para conocer en
+[ 343]        :                                       ;el valor de ese dato en el código ascii
+[ 344]    02D0: A2 1E 01                              mov num2Dec,al     ;cuando se termina de realizar la resta, se asigna a la variable num2Dec
+[ 345]        :                                       ;que es el encargado de alamacenar las decenas del número con el que se trabajará.
+[ 346]    02D3: B4 01                                 mov ah, 01h        ;Se realiza de nuevo una petición, pero esta vez para obtener las unidades del número
+[ 347]    02D5: CD 21                                 int 21h            ;se muestra la consola para ingresar el caracter. Este caracter se guarda el al.
+[ 348]    02D7: 2C 30                                 sub al,30h         ;Se le resta 30h a al para conocer cuál es el número ingresado, posteriormente
+[ 349]    02D9: A2 1D 01                              mov num2Uni,al     ;este resultado se le es asignado a la variable num2Uni.
+[ 350]    02DC: A0 1D 01 8A 1E 1B 01 F6 E3 B4 00 D4   Macro5_Multiplicacion num1Dec,num1Uni,num2Dec,num2Uni  ;Se llama a la macro Macro5_Multiplicacion y se le envía los parámetros num1Dec,num1Uni,num2Dec,num2Un.
+                0A A2 21 01 88 26 25 01 A0 1D 01 8A 
+                1E 1C 01 F6 E3 02 06 25 01 B4 00 D4 
+                0A A2 23 01 88 26 25 01 88 26 22 01 
+                A0 1E 01 8A 1E 1B 01 F6 E3 B4 00 D4 
+                0A 00 06 23 01 00 26 26 01 A0 23 01 
+                B4 00 D4 0A A2 23 01 00 26 22 01 A0 
+                1E 01 8A 1E 1C 01 F6 E3 02 06 26 01 
+                B4 00 D4 0A 00 06 22 01 88 26 24 01 
+                A0 22 01 B4 00 D4 0A A2 22 01 00 26 
+                24 01 C6 06 25 01 00 C6 06 26 01 00 
+                B4 09 BA D4 00 CD 21 B4 02 8A 16 24 
+                01 80 C2 30 CD 21 B4 02 8A 16 22 01 
+                80 C2 30 CD 21 B4 02 8A 16 23 01 80 
+                C2 30 CD 21 B4 02 8A 16 21 01 80 C2 
+                30 CD 21 E9 0F FE                   
+[ 351]        :                                       
+[ 352]    0396:                                       Division:
+[ 353]    0396: D4 0A                                 aam                ;Separa lo qe hay en AL por: AH=2 Y AL=3
+[ 354]    0398: 88 26 22 01                           mov cente,ah       ;Respaldo las centenas en cen en este caso 2
+[ 355]        :                                       
+[ 356]    039C: A2 23 01                              mov dece,al        ;Respaldo las decenas en dec, en este caso 3
+[ 357]        :                                       
+[ 358]        :                                       
+[ 359]    039F: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 360]    03A1: BA D4 00                              lea dx,Resultado   ;Lea carga el mensaje de la variable Resultado en el segmento de datos y
+[ 361]    03A4: CD 21                                 int 21h
+[ 362]        :                                       
+[ 363]    03A6: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 364]    03A8: BA 92 00                              lea dx, dividendo  ;Lea carga el mensaje de la variable dividendo en el segmento de datos y
+[ 365]    03AB: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 366]    03AD: B4 01                                 mov ah,01h         ;01h se encarga de realizar una petición junto con la
+[ 367]    03AF: CD 21                                 int 21h            ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 368]    03B1: 2C 30                                 sub al,30h         ;Como el caracter se guarda en al, entonces a al se le resta 30h para conocer en
+[ 369]        :                                       ;el valor de ese dato en el código ascii
+[ 370]    03B3: A2 23 01                              mov dece,al        ;cuando se termina de realizar la resta, se asigna a la variable dece
+[ 371]        :                                       ;que es el encargado de alamacenar las decenas del número con el que se trabajará.
+[ 372]    03B6: B4 01                                 mov ah, 01h        ;Se realiza de nuevo una petición, pero esta vez para obtener las unidades del número
+[ 373]    03B8: CD 21                                 int 21h            ;se muestra la consola para ingresar el caracter. Este caracter se guarda el al.
+[ 374]    03BA: 2C 30                                 sub al,30h         ;Se le resta 30h a al para conocer cuál es el número ingresado, posteriormente
+[ 375]    03BC: A2 21 01                              mov uni,al         ;este resultado se le es asignado a la variable uni.
+[ 376]        :                                       
+[ 377]        :                                       ;Procedimiento para guardar el número ingresado a la variable dato
+[ 378]        :                                       ;Como el número ingresado esta separado en decenas y unidades entonces se realiza lo siguiente.
+[ 379]    03BF: A0 23 01                              mov al,dece        ;Se mueve al acumulador al el valor de la variable dece.
+[ 380]    03C2: B3 0A                                 mov bl,10          ;Se asigna el valor de 10 en el registro base, ya que una decena equiva a 10
+[ 381]    03C4: F6 E3                                 mul bl             ;Se multiplica al por bl para tener el resultado. El resultado se guarda en al
+[ 382]    03C6: 02 06 21 01                           add al,uni         ;Como ya se tiene las decenas ahora solo se le suma las unidades al registro al.
+[ 383]    03CA: A2 20 01                              mov numero2,al     ;Se mueve lo que tiene AL a la variable numero2.
+[ 384]    03CD: B4 09                                 mov ah, 09h        ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 385]    03CF: BA AB 00                              lea dx, divisor    ;Lea carga el mensaje de la variable divisor en el segmento de datos y
+[ 386]    03D2: CD 21                                 int 21h            ;la interrupción 21h muestra el mensaje.
+[ 387]    03D4: B4 01                                 mov ah,01h         ;01h se encarga de realizar una petición junto con la
+[ 388]    03D6: CD 21                                 int 21h            ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 389]    03D8: 2C 30                                 sub al,30h         ;Como el caracter se guarda en al, entonces a al se le resta 30h para conocer en
+[ 390]        :                                       ;el valor de ese dato en el código ascii
+[ 391]    03DA: A2 23 01                              mov dece,al        ;cuando se termina de realizar la resta, se asigna a la variable dece
+[ 392]        :                                       ;que es el encargado de alamacenar las decenas del número con el que se trabajará.
+[ 393]    03DD: B4 01                                 mov ah, 01h        ;Se realiza de nuevo una petición, pero esta vez para obtener las unidades del número
+[ 394]    03DF: CD 21                                 int 21h            ;se muestra la consola para ingresar el caracter. Este caracter se guarda el al.
+[ 395]    03E1: 2C 30                                 sub al,30h         ;Se le resta 30h a al para conocer cuál es el número ingresado, posteriormente
+[ 396]    03E3: A2 21 01                              mov uni,al         ;este resultado se le es asignado a la variable uni.
+[ 397]        :                                       
+[ 398]        :                                       ;Procedimiento para guardar el número ingresado a la variable dato
+[ 399]        :                                       ;Como el número ingresado esta separado en decenas y unidades entonces se realiza lo siguiente.
+[ 400]    03E6: A0 23 01                              mov al,dece        ;Se mueve al acumulador al el valor de la variable dece.
+[ 401]    03E9: B3 0A                                 mov bl,10          ;Se asigna el valor de 10 en el registro base, ya que una decena equiva a 10
+[ 402]    03EB: F6 E3                                 mul bl             ;Se multiplica al por bl para tener el resultado. El resultado se guarda en al
+[ 403]    03ED: 02 06 21 01                           add al,uni         ;Como ya se tiene las decenas ahora solo se le suma las unidades al registro al.
+[ 404]    03F1: A2 1F 01                              mov numero1,al     ;Se mueve lo que tiene AL a la variable numero1.
+[ 405]    03F4: 33 C0 8A 1E 1F 01 A0 20 01 F6 F3 A2   Macro6_Division numero1,numero2  ;Se llama a la macro Macro6_Division y se le envía dos parámetros.
+                1A 01 88 26 19 01 B4 09 BA C2 00 CD 
+                21 A0 19 01 D4 0A 8B D8 B4 02 8A D7 
+                80 C2 30 CD 21 B4 02 8A D3 80 C2 30 
+                CD 21 B4 09 BA D4 00 CD 21 B4 00 A0 
+                1A 01 D4 0A A2 21 01 8A C4 D4 0A A2 
+                23 01 88 26 22 01 B4 02 8A 16 22 01 
+                80 C2 30 CD 21 B4 02 8A 16 23 01 80 
+                C2 30 CD 21 B4 02 8A 16 21 01 80 C2 
+                30 CD 21 E9 3F FD                   
+[ 406]        :                                       
+[ 407]        :                                       
+[ 408]    0466:                                       ResultadoResta PROC NEAR
+[ 409]        :                                       
+[ 410]    0466: D4 0A                                 aam              ;Sirve para separar lo que se tiene en AH, para que se divida en centenas, decenas y unidades
+[ 411]    0468: A2 21 01                              mov uni,al       ;Se mueve lo que tiene el registro AL a la variable de unidades
+[ 412]    046B: 8A C4                                 mov al,ah        ;Se mueve el valor de ah al registro al para volver a obtenr los numeros
+[ 413]        :                                       
+[ 414]        :                                       
+[ 415]    046D: D4 0A                                 aam              ;Sirve para separar lo que se tiene en AH, para que se divida en centenas, decenas y unidades
+[ 416]    046F: 88 26 22 01                           mov cente,ah     ;respaldo las centenas en cen en este caso 2
+[ 417]    0473: A2 23 01                              mov dece,al      ;Se mueve el valor que tenemos en al a la variabel de las decenas
+[ 418]        :                                       
+[ 419]    0476: B4 09                                 mov ah,09h       ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 420]    0478: BA D4 00                              lea dx,Resultado ;Lea carga el mensaje de la variable Resultado en el segmento de datos y
+[ 421]    047B: CD 21                                 int 21h          ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 422]        :                                       
+[ 423]        :                                       
+[ 424]    047D: 83 FE 00                              CMP SI, 0        ;compara si el registro de segmento de datos, esto se hace hasta que el valor sea igual a cero
+[ 425]    0480: 74 07                                 JE  imprimir     ;salta al bloque de imprimir si se cumple la comparacion anterior
+[ 426]    0482: B4 09                                 mov ah, 09h      ;Se mueve la interrupción 09h a ah, para que se realice una petición para mostrar el mensaje
+[ 427]    0484: BA 27 01                              lea dx,negativo  ;Lea carga el mensaje de la variable Resultado en el segmento de datos y
+[ 428]    0487: CD 21                                 int 21h          ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 429]        :                                       
+[ 430]    0489:                                       imprimir:        ;Bloque para hacer el ajuste de la resta en caso de ser negartivo.
+[ 431]    0489: B4 02                                 mov ah,02h       ;02h indica la operacion que coloca al cursor
+[ 432]        :                                       
+[ 433]    048B: 8A 16 22 01                           mov dl,cente     ;Mueve las decenas al registro de datos dl
+[ 434]    048F: 80 C2 30                              add dl,30h       ;Le agrega 30h al registro dl, esto sirve para hacer el ajuste de carga para imprimir el numero real.
+[ 435]    0492: CD 21                                 int 21h          ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 436]        :                                       
+[ 437]    0494: 8A 16 23 01                           mov dl,dece      ;Mueve las decenas al registro de datos dl
+[ 438]    0498: 80 C2 30                              add dl,30h       ;Le agrega 30h al registro dl, esto sirve para hacer el ajuste de carga para imprimir el numero real.
+[ 439]    049B: CD 21                                 int 21h          ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 440]        :                                       
+[ 441]    049D: 8A 16 21 01                           mov dl,uni       ;Mueve las unidades al registro de datos dl
+[ 442]    04A1: 80 C2 30                              add dl,30h       ;Le agrega 30h al registro dl, esto sirve para hacer el ajuste de carga para imprimir el numero real.
+[ 443]    04A4: CD 21                                 int 21h          ;interrupción 21h.Cuando se ingresa el caracter automáticamente se guarda en al.
+[ 444]        :                                       
+[ 445]    04A6: E9 FC FC                              jmp Main         ;Salta al menú principal
+[ 446]        :                                       ResultadoResta ENDP  ;Finaliza el procedimiento ResultadoResta
+[ 447]        :                                       
+[ 448]        :                                       
+[ 449]    04A9:                                       salir:    ;Etiqueta salir
+[ 450]    04A9: B8 00 4C CD 21                        .exit ;Sirve para terminar las instrucciones
+[ 451]        :                                       
+[ 452]    04AE: C3                                    ret   ;Retorno del programa
+[ 453]        :                                       end   ;Fin del archivo fuente.
+[ 454]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: AF      -   bytes on last page (l.byte)
+0003: 00      -   bytes on last page (h.byte)
+0004: 04      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 64      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: 1F      -   check sum (l.byte)
+0013: FC      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 1A      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 1A      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

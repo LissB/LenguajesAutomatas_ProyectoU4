@@ -1,0 +1,50 @@
+< THE SYMBOL TABLE >  Albornoz Chin Ricardo_Xooc Balam Ingrid_PROYECTO_U4.exe  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+STACK                    	00000     	-5        	SEGMENT   	(ITSELF)  
+DATA                     	00007     	-5        	SEGMENT   	(ITSELF)  
+OPCION1                  	00000     	1         	VAR       	data      
+OPCION2                  	0001D     	1         	VAR       	data      
+OPCION3                  	0003B     	1         	VAR       	data      
+OPCION4                  	00062     	1         	VAR       	data      
+OPCION5                  	00083     	1         	VAR       	data      
+DIVIDENDO                	00092     	1         	VAR       	data      
+DIVISOR                  	000AB     	1         	VAR       	data      
+RESIDUO                  	000C2     	1         	VAR       	data      
+RESULTADO                	000D4     	1         	VAR       	data      
+PRIMERMSG                	000E8     	1         	VAR       	data      
+NUMERO                   	000FF     	1         	VAR       	data      
+NLINEA                   	00115     	1         	VAR       	data      
+RESII                    	00119     	1         	VAR       	data      
+RESUL                    	0011A     	1         	VAR       	data      
+NUM1UNI                  	0011B     	1         	VAR       	data      
+NUM1DEC                  	0011C     	1         	VAR       	data      
+NUM2UNI                  	0011D     	1         	VAR       	data      
+NUM2DEC                  	0011E     	1         	VAR       	data      
+NUMERO1                  	0011F     	1         	VAR       	data      
+NUMERO2                  	00120     	1         	VAR       	data      
+UNI                      	00121     	1         	VAR       	data      
+CENTE                    	00122     	1         	VAR       	data      
+DECE                     	00123     	1         	VAR       	data      
+MILLAR                   	00124     	1         	VAR       	data      
+ACARREO1                 	00125     	1         	VAR       	data      
+ACARREO2                 	00126     	1         	VAR       	data      
+NEGATIVO                 	00127     	1         	VAR       	data      
+CODE                     	0001A     	-5        	SEGMENT   	(ITSELF)  
+MAIN                     	00005     	-1        	LABEL     	code      
+PROCEDIMIENTO1_MENU      	0002D     	-1        	NEAR      	code      
+OBTENEROPCION            	00053     	-1        	NEAR      	code      
+DATODECIMAL              	0005F     	-1        	NEAR      	code      
+SUMA                     	00084     	-1        	LABEL     	code      
+RESTA                    	000DA     	-1        	LABEL     	code      
+CONTINUA                 	00100     	-1        	LABEL     	code      
+MULTIPLICACION           	0010A     	-1        	LABEL     	code      
+DIVISION                 	001F6     	-1        	LABEL     	code      
+RESULTADORESTA           	002C6     	-1        	NEAR      	code      
+IMPRIMIR                 	002E9     	-1        	LABEL     	code      
+SALIR                    	00309     	-1        	LABEL     	code      
+===================================================================================================
+[ 28/05/2020  --  12:33:42 a. m. ] 
+< END >
+ 
